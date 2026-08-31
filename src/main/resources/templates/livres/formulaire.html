@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Livre</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header th:replace="~{fragments/nav :: nav}"></header>
+    <main>
+        <h1 th:text="${livre.id} != null ? 'Modifier le livre' : 'Ajouter un livre'"></h1>
+        <form class="formulaire" th:action="@{/livres/enregistrer}" th:object="${livre}" method="post">
+            <input type="hidden" th:field="*{id}">
+
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" th:field="*{nom}">
+            <div class="erreur-champ" th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></div>
+
+            <label for="auteur">Auteur</label>
+            <input type="text" id="auteur" th:field="*{auteur}">
+            <div class="erreur-champ" th:if="${#fields.hasErrors('auteur')}" th:errors="*{auteur}"></div>
+
+            <label for="disponible">Disponible</label>
+            <select id="disponible" th:field="*{disponible}">
+                <option value="true">Oui</option>
+                <option value="false">Non</option>
+            </select>
+
+            <br><br>
+            <button class="bouton" type="submit">Enregistrer</button>
+            <a th:href="@{/livres}">Annuler</a>
+        </form>
+    </main>
+</body>
+</html>

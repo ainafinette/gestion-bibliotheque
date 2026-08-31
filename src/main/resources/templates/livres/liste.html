@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Livres</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header th:replace="~{fragments/nav :: nav}"></header>
+    <main>
+        <h1>Livres</h1>
+        <div class="barre-actions">
+            <a class="bouton" th:href="@{/livres/nouveau}">Ajouter un livre</a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Auteur</th>
+                    <th>Etat</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="livre : ${livres}">
+                    <td th:text="${livre.nom}"></td>
+                    <td th:text="${livre.auteur}"></td>
+                    <td>
+                        <span th:if="${livre.disponible}" class="disponible">Disponible</span>
+                        <span th:unless="${livre.disponible}" class="indisponible">Non disponible</span>
+                    </td>
+                    <td class="actions">
+                        <a th:href="@{/livres/modifier/{id}(id=${livre.id})}">Modifier</a>
+                        <a th:href="@{/livres/supprimer/{id}(id=${livre.id})}"
+                           onclick="return confirm('Supprimer ce livre ?');">Supprimer</a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(livres)}">
+                    <td colspan="4" class="vide">Aucun livre enregistre</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Clients</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header th:replace="~{fragments/nav :: nav}"></header>
+    <main>
+        <h1>Clients</h1>
+        <div class="barre-actions">
+            <a class="bouton" th:href="@{/clients/nouveau}">Ajouter un client</a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Telephone</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="client : ${clients}">
+                    <td th:text="${client.nom}"></td>
+                    <td th:text="${client.numeroTelephone}"></td>
+                    <td class="actions">
+                        <a th:href="@{/clients/modifier/{id}(id=${client.id})}">Modifier</a>
+                        <a th:href="@{/clients/supprimer/{id}(id=${client.id})}"
+                           onclick="return confirm('Supprimer ce client ?');">Supprimer</a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(clients)}">
+                    <td colspan="3" class="vide">Aucun client enregistre</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

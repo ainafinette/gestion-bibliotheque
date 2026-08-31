@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nouvel emprunt</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header th:replace="~{fragments/nav :: nav}"></header>
+    <main>
+        <h1>Nouvel emprunt</h1>
+        <div class="message-erreur" th:if="${erreur}" th:text="${erreur}"></div>
+        <form class="formulaire" th:action="@{/emprunts/enregistrer}" method="post">
+            <label for="clientId">Client</label>
+            <select id="clientId" name="clientId">
+                <option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.nom}"></option>
+            </select>
+
+            <label for="livreId">Livre disponible</label>
+            <select id="livreId" name="livreId">
+                <option th:each="livre : ${livres}" th:value="${livre.id}" th:text="${livre.nom} + ' - ' + ${livre.auteur}"></option>
+            </select>
+            <div class="erreur-champ" th:if="${#lists.isEmpty(livres)}">Aucun livre disponible actuellement</div>
+
+            <br><br>
+            <button class="bouton" type="submit">Enregistrer l'emprunt</button>
+            <a th:href="@{/emprunts}">Annuler</a>
+        </form>
+    </main>
+</body>
+</html>

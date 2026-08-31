@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Emprunts</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header th:replace="~{fragments/nav :: nav}"></header>
+    <main>
+        <h1>Emprunts</h1>
+        <div class="barre-actions">
+            <a class="bouton" th:href="@{/emprunts/nouveau}">Nouvel emprunt</a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Client</th>
+                    <th>Livre</th>
+                    <th>Date d'emprunt</th>
+                    <th>Date de retour</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="emprunt : ${emprunts}">
+                    <td th:text="${emprunt.client.nom}"></td>
+                    <td th:text="${emprunt.livre.nom}"></td>
+                    <td th:text="${emprunt.dateEmprunt}"></td>
+                    <td>
+                        <span th:if="${emprunt.dateRetour} != null" th:text="${emprunt.dateRetour}"></span>
+                        <span th:if="${emprunt.dateRetour} == null" class="indisponible">Non rendu</span>
+                    </td>
+                    <td class="actions">
+                        <a th:if="${emprunt.dateRetour} == null"
+                           th:href="@{/emprunts/retourner/{id}(id=${emprunt.id})}">Marquer comme rendu</a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(emprunts)}">
+                    <td colspan="5" class="vide">Aucun emprunt enregistre</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Client</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header th:replace="~{fragments/nav :: nav}"></header>
+    <main>
+        <h1 th:text="${client.id} != null ? 'Modifier le client' : 'Ajouter un client'"></h1>
+        <form class="formulaire" th:action="@{/clients/enregistrer}" th:object="${client}" method="post">
+            <input type="hidden" th:field="*{id}">
+
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" th:field="*{nom}">
+            <div class="erreur-champ" th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></div>
+
+            <label for="numeroTelephone">Numero de telephone</label>
+            <input type="text" id="numeroTelephone" th:field="*{numeroTelephone}">
+            <div class="erreur-champ" th:if="${#fields.hasErrors('numeroTelephone')}" th:errors="*{numeroTelephone}"></div>
+
+            <br><br>
+            <button class="bouton" type="submit">Enregistrer</button>
+            <a th:href="@{/clients}">Annuler</a>
+        </form>
+    </main>
+</body>
+</html>
