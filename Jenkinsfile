@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         maven 'Maven3'
-        jdk 'JDK23'
+        jdk 'JDK21'
     }
 
     stages {
@@ -13,25 +13,28 @@ pipeline {
             }
         }
 
-        stage('Compilation') {
+        stage('Compilation & Tests & Rapport de couverture') {
             steps {
-                bat 'mvn -B compile'
-            }
-        }
-
-        stage('Tests unitaires') {
-            steps {
-                bat 'mvn -B test'
+                // "verify" lance les tests ET génère le rapport JaCoCo
+                bat 'mvn -B verify'
             }
             post {
                 always {
+                    // Publie les résultats des tests JUnit
                     junit 'target/surefire-reports/*.xml'
+                    // Publie le rapport JaCoCo (nécessite le plugin "HTML Publisher" installé dans Jenkins)
+                    publishHTML([
+                        reportDir: 'target/site/jacoco',
+                        reportFiles: 'index.html',
+                        reportName: 'Rapport de couverture JaCoCo'
+                    ])
                 }
             }
         }
 
         stage('Empaquetage') {
             steps {
+                // On a déjà fait le package dans verify, mais on peut le refaire si besoin
                 bat 'mvn -B package -DskipTests'
             }
         }
@@ -39,7 +42,7 @@ pipeline {
 
     post {
         success {
-            echo 'Build reussi : compilation, tests et empaquetage OK.'
+            echo 'Build reussi : compilation, tests, couverture et empaquetage OK.'
         }
         failure {
             echo 'Build en echec, voir les logs et le rapport de tests.'
