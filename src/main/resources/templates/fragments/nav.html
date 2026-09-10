@@ -1,7 +1,51 @@
-<header th:fragment="nav" xmlns:th="http://www.thymeleaf.org">
-    <span class="titre">Bibliotheque</span>
-    <a th:href="@{/}">Accueil</a>
-    <a th:href="@{/clients}">Clients</a>
-    <a th:href="@{/livres}">Livres</a>
-    <a th:href="@{/emprunts}">Emprunts</a>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<header th:fragment="nav" class="navbar navbar-expand-lg navbar-dark  shadow-sm">
+    <div class="container-fluid px-4">
+        <span class="titre navbar-brand fw-bold mb-0">
+            <i class="bi bi-book-half"></i> Bibliotheque
+        </span>
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navMenu"
+                aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a th:href="@{/}" class="nav-link">
+                        <i class="bi bi-house-door"></i> Accueil
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/dashboard}" class="nav-link">
+                        <i class="bi bi-speedometer2"></i> Tableau de bord
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/clients}" class="nav-link">
+                        <i class="bi bi-people"></i> Clients
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/livres}" class="nav-link">
+                        <i class="bi bi-book"></i> Livres
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/emprunts}" class="nav-link">
+                        <i class="bi bi-arrow-left-right"></i> Emprunts
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/historique}" class="nav-link">
+                        <i class="bi bi-clock-history"></i> Historique
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </header>
+

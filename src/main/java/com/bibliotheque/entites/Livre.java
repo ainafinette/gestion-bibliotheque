@@ -63,4 +63,8 @@ public class Livre {
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
     }
+
+    public String getTitre() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
